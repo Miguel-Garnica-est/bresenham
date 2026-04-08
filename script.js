@@ -8,40 +8,55 @@
  */
 const canvas = document.getElementById("canvas")// canvas
 const ctx = canvas.getContext('2d') // canvas con el contexto en 2d
-const tabla = document.getElementById("tabulacion")// tabla de coordenadas usadas
+const tabla = document.getElementById("tabulacion")// tabulacion de los calculos
+const resultado = document.getElementById("resultado")// texto que indica el resultado al intentar dibujar
 
-function bresenham(x0, y0, x1, y1, plot) {
-    // Cálculo de diferenciales y dirección del paso
-    let dx = Math.abs(x1 - x0);
-    let dy = Math.abs(y1 - y0);
-    let sx = (x0 < x1) ? 1 : -1;
-    let sy = (y0 < y1) ? 1 : -1;
-    let err = dx - dy;
+function bresenham() {
+    let x1 = document.getElementsByName("x1")[0].value
+    let y1 = document.getElementsByName("y1")[0].value
+    let x0 = document.getElementsByName("x0")[0].value
+    let y0 = document.getElementsByName("y0")[0].value
+    ejes()
+    //limpia el canvas y dibuja los ejes
+    if (verificacion(x0, y0, x1, y1)) {
+        //termina si las coordenadas son invalidas
+        return
+    } else {
 
-    while (true) {
-        // Dibujar el punto actual
-        plot(x0, y0);
+        // Cálculo de diferenciales y dirección del paso
+        let dx = Math.abs(x1 - x0);
+        let dy = Math.abs(y1 - y0);
+        let sx = (x0 < x1) ? 1 : -1;
+        let sy = (y0 < y1) ? 1 : -1;
+        let err = dx - dy;
 
-        // Condición de finalización
-        if (x0 === x1 && y0 === y1) break;
+        while (true) {
+            // Dibujar el punto actual
+            plot(x0, y0);
 
-        let e2 = 2 * err;
+            // Condición de finalización
+            if (x0 === x1 && y0 === y1) break;
 
-        // Ajuste en el eje X
-        if (e2 > -dy) {
-            err -= dy;
-            x0 += sx;
-        }
+            let e2 = 2 * err;
 
-        // Ajuste en el eje Y
-        if (e2 < dx) {
-            err += dx;
-            y0 += sy;
+            // Ajuste en el eje X
+            if (e2 > -dy) {
+                err -= dy;
+                x0 += sx;
+            }
+
+            // Ajuste en el eje Y
+            if (e2 < dx) {
+                err += dx;
+                y0 += sy;
+            }
         }
     }
 }
 
 function ejes() {
+    //limpia el canvas
+    ctx.clearRect(0, 0, 500, 500);
     //dibuja linea de y
     ctx.strokeStyle = "green"
     ctx.lineWidth = 2
@@ -51,18 +66,21 @@ function ejes() {
     ctx.stroke();
     //dibuja linea en y cada 50 pixeles y la numera
     for (let i = 0; i <= 10; i++) {
-        const y = 500-(i*50);
+        const y = 500 - (i * 50);
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(5, y);
         ctx.stroke();
-        //correccion de ubicacion para numero 0
-        if(i==0){
+        //correccion de ubicacion para numero 0 y 50
+        if (i == 0) {
             ctx.fillText(i, 5, 493);
-        }else{
-            ctx.fillText(i*5, 5, y);
         }
-        
+        if ((i * 5) == 50) {
+            ctx.fillText(i * 5, 5, 7);
+        } else {
+            ctx.fillText(i * 5, 5, y);
+        }
+
     }
     //dibuja linea de x
     ctx.strokeStyle = "red"
@@ -73,18 +91,45 @@ function ejes() {
     ctx.stroke();
     //dibuja linea en x cada 50 pixeles y la numera
     for (let i = 0; i <= 10; i++) {
-        const x = i*50;
+        const x = i * 50;
         ctx.beginPath();
         ctx.moveTo(x, 495);
         ctx.lineTo(x, 500);
         ctx.stroke();
         //correccion de ubicacion para numero 50
-        if((i*5)==50){
-            ctx.fillText(i*5, x-10, 493);
-        }else{
-            ctx.fillText(i*5, x-7, 493);
+        if ((i * 5) == 50) {
+            ctx.fillText(i * 5, x - 10, 493);
+        } else {
+            ctx.fillText(i * 5, x - 7, 493);
         }
-        
+
+    }
+
+}
+function plot(x, y) {
+    ctx.fillStyle = "blue"
+    ctx.beginPath()
+    ctx.arc(x, y, 5, 0, 360)
+    ctx.fill();
+
+
+}
+function verificacion(x0, y0, x1, y1) {
+    if (isNaN(x0) || isNaN(y0) || isNaN(x1) || isNaN(y1)) {
+        console.log("Valores invalidos")
+        resultado.innerHTML = "❌ Los puntos no son<br>validos"
+        return true
+    }
+    if (x0 > 50 || x0 < 0 || y0 > 50 || y0 < 0 || x1 > 50 || x1 < 0 || y1 > 50 || y1 < 0) {
+        console.log("Valores invalidos")
+        resultado.innerHTML = "❌ Los puntos no son<br>validos"
+        return true
+
+    }
+    else {
+        console.log("Valores validos")
+        resultado.innerHTML = "✔️ Los puntos son<br>validos"
+        return false
     }
 
 }
