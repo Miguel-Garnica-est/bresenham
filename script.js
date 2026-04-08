@@ -56,7 +56,13 @@ function ejes() {
         ctx.moveTo(0, y);
         ctx.lineTo(5, y);
         ctx.stroke();
-        ctx.fillText(i*5, 5, y);
+        //correccion de ubicacion para numero 0
+        if(i==0){
+            ctx.fillText(i, 5, 493);
+        }else{
+            ctx.fillText(i*5, 5, y);
+        }
+        
     }
     //dibuja linea de x
     ctx.strokeStyle = "red"
@@ -72,7 +78,13 @@ function ejes() {
         ctx.moveTo(x, 495);
         ctx.lineTo(x, 500);
         ctx.stroke();
-        ctx.fillText(i*5, x-7, 493);
+        //correccion de ubicacion para numero 50
+        if((i*5)==50){
+            ctx.fillText(i*5, x-10, 493);
+        }else{
+            ctx.fillText(i*5, x-7, 493);
+        }
+        
     }
 
 }
