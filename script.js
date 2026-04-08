@@ -12,16 +12,27 @@ const tabla = document.getElementById("tabulacion")// tabulacion de los calculos
 const resultado = document.getElementById("resultado")// texto que indica el resultado al intentar dibujar
 
 function bresenham() {
+    //consigue las coordenadas
     let x1 = document.getElementsByName("x1")[0].value
     let y1 = document.getElementsByName("y1")[0].value
     let x0 = document.getElementsByName("x0")[0].value
     let y0 = document.getElementsByName("y0")[0].value
+    //convierte las coordenadas de string a float
+    x1 = parseFloat(x1)
+    y1 = parseFloat(y1)
+    x0 = parseFloat(x0)
+    y0 = parseFloat(y0)
+        //limpia el canvas y dibuja los ejes
     ejes()
-    //limpia el canvas y dibuja los ejes
     if (verificacion(x0, y0, x1, y1)) {
         //termina si las coordenadas son invalidas
         return
     } else {
+        //convierte las coordenadas a pixeles y las invierte en y
+        x1 *= 10
+        y1 = 500 - (y1 * 10)
+        x0 *= 10
+        y0 = 500 - (y0 * 10)
 
         // Cálculo de diferenciales y dirección del paso
         let dx = Math.abs(x1 - x0);
@@ -74,12 +85,14 @@ function ejes() {
         //correccion de ubicacion para numero 0 y 50
         if (i == 0) {
             ctx.fillText(i, 5, 493);
-        }
-        if ((i * 5) == 50) {
-            ctx.fillText(i * 5, 5, 7);
         } else {
-            ctx.fillText(i * 5, 5, y);
+            if ((i * 5) == 50) {
+                ctx.fillText(i * 5, 5, 7);
+            } else {
+                ctx.fillText(i * 5, 5, y);
+            }
         }
+
 
     }
     //dibuja linea de x
@@ -109,7 +122,7 @@ function ejes() {
 function plot(x, y) {
     ctx.fillStyle = "blue"
     ctx.beginPath()
-    ctx.arc(x, y, 5, 0, 360)
+    ctx.arc(x, y, 1, 0, Math.PI * 2)
     ctx.fill();
 
 
