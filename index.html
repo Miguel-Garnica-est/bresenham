@@ -1,11 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .parametros {
+            display: flex;
+            align-items: flex-start;
+
+        }
+
+        .tablero {
+            flex: none;
+        }
+
+        .tabla {
+            flex: none;
+        }
+
+        canvas {
+            flex: none;
+
+        }
+    </style>
 </head>
+
 <body>
-    
+    <div class="parametros">
+        <div class="tablero">
+            <h1>x0&emsp;&emsp;&emsp;&emsp;&ensp;y0&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</h1>
+            <input type="number" name="x0" placeholder="1-49">
+            <input type="number" name="y0" placeholder="1-49">
+
+            <h1>x1&emsp;&emsp;&emsp;&emsp;&ensp;y1</h1>
+            <input type="number" name="x1" placeholder="1-49">
+            <input type="number" name="y1" placeholder="1-49">
+
+            <h1>grosor</h1>
+            <input type="number" name="grosor" placeholder="1-10">
+            <h1 id="resultado">Presione dibujar para iniciar&ensp;</h1>
+            <button id="start">dibujar</button>
+        </div>
+
+        <canvas id="canvas" width="500" height="500" style="border:1px solid black;"></canvas>
+
+        <div class="tabla">
+            <table id="tabulacion" border="1">
+                <thead>
+                    <tr>
+                        <th>Punto&emsp;</th>
+                        <th>X&emsp;</th>
+                        <th>Y&emsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>2</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+    <script src="script.js"></script>
 </body>
+
 </html>

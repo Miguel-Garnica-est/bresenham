@@ -1,4 +1,4 @@
-/*
+/** 
  * Implementación del algoritmo de líneas de Bresenham.
  * @param {number} x0 - Coordenada X inicial.
  * @param {number} y0 - Coordenada Y inicial.
@@ -6,6 +6,10 @@
  * @param {number} y1 - Coordenada Y final.
  * @param {Function} plot - Función para dibujar el píxel (x, y).
  */
+    const canvas = document.getElementById("canvas")
+    const ctx = canvas.getContext('2d')
+    const tabla = document.getElementById("tabulacion")
+
 function bresenham(x0, y0, x1, y1, plot) {
     // Cálculo de diferenciales y dirección del paso
     let dx = Math.abs(x1 - x0);
