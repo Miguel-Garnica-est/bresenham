@@ -6,9 +6,9 @@
  * @param {number} y1 - Coordenada Y final.
  * @param {Function} plot - Función para dibujar el píxel (x, y).
  */
-const canvas = document.getElementById("canvas")
-const ctx = canvas.getContext('2d')
-const tabla = document.getElementById("tabulacion")
+const canvas = document.getElementById("canvas")// canvas
+const ctx = canvas.getContext('2d') // canvas con el contexto en 2d
+const tabla = document.getElementById("tabulacion")// tabla de coordenadas usadas
 
 function bresenham(x0, y0, x1, y1, plot) {
     // Cálculo de diferenciales y dirección del paso
@@ -42,12 +42,14 @@ function bresenham(x0, y0, x1, y1, plot) {
 }
 
 function ejes() {
+    //dibuja linea de y
     ctx.strokeStyle = "green"
     ctx.lineWidth = 2
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.lineTo(0, 500);
     ctx.stroke();
+    //dibuja linea en y cada 50 pixeles y la numera
     for (let i = 0; i <= 10; i++) {
         const y = 500-(i*50);
         ctx.beginPath();
@@ -56,13 +58,14 @@ function ejes() {
         ctx.stroke();
         ctx.fillText(i*5, 5, y);
     }
-
+    //dibuja linea de x
     ctx.strokeStyle = "red"
     ctx.lineWidth = 2
     ctx.beginPath();
     ctx.moveTo(0, 500);
     ctx.lineTo(500, 500);
     ctx.stroke();
+    //dibuja linea en x cada 50 pixeles y la numera
     for (let i = 0; i <= 10; i++) {
         const x = i*50;
         ctx.beginPath();
