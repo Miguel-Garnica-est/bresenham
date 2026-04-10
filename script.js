@@ -23,14 +23,14 @@ function bresenham() {
     x0 = parseFloat(x0)
     y0 = parseFloat(y0)
     //limpia el canvas y dibuja los ejes
-    ejes()
+    ejes(x0,y0,x1,y1)
     if (verificacion(x0, y0, x1, y1)) {
         //termina si las coordenadas son invalidas
         return
     } else {
         //convierte las coordenadas a pixeles y las invierte en y
-        x1 *= 10
-        y1 = 500 - (y1 * 10)
+        x1 = (x1/500)*10
+        y1 = ctx.canvas.height - ((y1/500) * 10)
         x0 *= 10
         y0 = 500 - (y0 * 10)
         //numero del paso actual
@@ -77,16 +77,18 @@ function ejes() {
     tablaClear()
     //limpia el canvas
     ctx.clearRect(0, 0, 500, 500)
-    //dibuja linea de y
-    ctx.strokeStyle = "green"
-    ctx.lineWidth = 2
-    ctx.beginPath()
-    ctx.moveTo(0, 0)
-    ctx.lineTo(0, 500)
-    ctx.stroke()
+    
     //dibuja linea en y cada 50 pixeles y la numera
     for (let i = 0; i <= 10; i++) {
         const y = 500 - (i * 50)
+        //rejilla gris de fondo
+        ctx.strokeStyle = "gray"
+        ctx.beginPath()
+        ctx.moveTo(0, y)
+        ctx.lineTo(500, y)
+        ctx.stroke()
+        //linea de distancia
+        ctx.strokeStyle = "green"
         ctx.beginPath()
         ctx.moveTo(0, y)
         ctx.lineTo(5, y)
@@ -101,19 +103,23 @@ function ejes() {
                 ctx.fillText(i * 5, 5, y);
             }
         }
+        
 
 
     }
-    //dibuja linea de x
-    ctx.strokeStyle = "red"
-    ctx.lineWidth = 2
-    ctx.beginPath()
-    ctx.moveTo(0, 500)
-    ctx.lineTo(500, 500)
-    ctx.stroke()
+    
+    
     //dibuja linea en x cada 50 pixeles y la numera
     for (let i = 0; i <= 10; i++) {
         const x = i * 50
+        //rejilla gris de fondo
+        ctx.strokeStyle = "gray"
+        ctx.beginPath()
+        ctx.moveTo(x, 0)
+        ctx.lineTo(x, 500)
+        ctx.stroke()
+        //linea de distancia
+        ctx.strokeStyle = "red"
         ctx.beginPath()
         ctx.moveTo(x, 495)
         ctx.lineTo(x, 500)
@@ -124,8 +130,23 @@ function ejes() {
         } else {
             ctx.fillText(i * 5, x - 7, 493)
         }
+        
 
     }
+    //dibuja linea de y
+    ctx.strokeStyle = "green"
+    ctx.lineWidth = 2
+    ctx.beginPath()
+    ctx.moveTo(0, 0)
+    ctx.lineTo(0, 500)
+    ctx.stroke()
+    //dibuja linea de x
+    ctx.strokeStyle = "red"
+    ctx.lineWidth = 2
+    ctx.beginPath()
+    ctx.moveTo(0, 500)
+    ctx.lineTo(500, 500)
+    ctx.stroke()
 
 }
 function plot(x, y) {
@@ -156,7 +177,7 @@ function verificacion(x0, y0, x1, y1) {
         return true
     }
     //verifica que este dentro del rango
-    if (x0 > 50 || x0 < 0 || y0 > 50 || y0 < 0 || x1 > 50 || x1 < 0 || y1 > 50 || y1 < 0) {
+    if (x0 > 1000 || x0 < 0 || y0 > 1000 || y0 < 0 || x1 > 1000 || x1 < 0 || y1 > 1000 || y1 < 0) {
         console.log("Valores invalidos")
         resultado.innerHTML = "❌ Los puntos no son<br>validos"
         return true
